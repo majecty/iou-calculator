@@ -1,32 +1,29 @@
 import React, { SyntheticEvent } from "react";
 
-interface OwnState {
-    typed: string;
+interface OwnProps {
+    data: WhoChargedData;
+    onWhoChargedChange: (out: WhoChargedData) => void;
 }
 
-export default class WhoCharged extends React.Component<any, OwnState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            typed: ""
-        };
+export interface WhoChargedData {
+    value: string;
+}
 
-    }
-
+export default class WhoCharged extends React.Component<OwnProps, any> {
     render() {
         return (
             <div className="field is-horizontal">
                 <h2 className="subtitle field-label is-normal">
                     누가 냈나요?
                 </h2>
-                <input type="text" value={this.state.typed} onChange={this.handleChange} className="input field-body" />
+                <input type="text" value={this.props.data.value} onChange={this.handleChange} className="input field-body" />
             </div>
         )
     }
 
-    handleChange = (event: SyntheticEvent) => {
-        this.setState({
-            typed: (event.target as HTMLInputElement).value
-        })
+    handleChange = (event: SyntheticEvent<HTMLInputElement>) => {
+        this.props.onWhoChargedChange({
+            value: (event.target as HTMLInputElement).value
+        });
     }
 }

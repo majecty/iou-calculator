@@ -1,16 +1,24 @@
 import React, { SyntheticEvent } from "react";
 
+interface OwnProps {
+    data: HowMuchData;
+    onHowMuchChange: (out: HowMuchData) => void;
+}
+
 interface OwnState {
     typed: string;
 }
 
-export default class HowMuch extends React.Component<any, OwnState> {
-    constructor(props: any) {
+export interface HowMuchData {
+    value: number;
+}
+
+export default class HowMuch extends React.Component<OwnProps, OwnState> {
+    constructor(props: OwnProps) {
         super(props);
         this.state = {
             typed: ""
         };
-
     }
 
     render() {
@@ -19,14 +27,24 @@ export default class HowMuch extends React.Component<any, OwnState> {
                 <h2 className="subtitle field-label is-normal">
                     얼마나?
                 </h2>
-                <input type="text" value={this.state.typed} onChange={this.handleChange} className="input field-body" />
+                <input type="text" value={this.props.data.value} onChange={this.handleChange} className="input field-body" />
             </div>
         )
     }
 
     handleChange = (event: SyntheticEvent) => {
-        this.setState({
-            typed: (event.target as HTMLInputElement).value
-        })
+        const nextValue = (event.target as HTMLInputElement).value;
+
+        try {
+            const parsedInput = parseInt(nextValue, 10);
+            this.setState({
+                typed: nextValue
+            })
+            this.props.onHowMuchChange({
+                value: parsedInput
+            });
+        } catch (_err) {
+            // do nothing
+        }
     }
 }

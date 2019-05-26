@@ -1,4 +1,4 @@
-import React, { Component, SyntheticEvent, MouseEvent } from 'react'
+import React, { Component, SyntheticEvent, MouseEvent, KeyboardEvent } from 'react'
 import { User } from '../types/globalTypes';
 
 interface OwnProps {
@@ -33,7 +33,8 @@ export default class AdditionalUsers extends Component<OwnProps, OwnState> {
                     <label className="subtitle field-label is-normal">
                         사람 추가하기
                     </label>
-                    <input type="text" value={this.state.typed} onChange={this.handleChange} className="input field-body" />
+                    <input type="text" value={this.state.typed} onChange={this.handleChange} className="input field-body"
+                        onKeyPress={this.handleKeyPress} />
                     <button className="button is-primary" onClick={this.handleClick}>추가</button>
                 </div>
             </div>
@@ -48,6 +49,14 @@ export default class AdditionalUsers extends Component<OwnProps, OwnState> {
     }
 
     handleClick = (_event: MouseEvent) => {
+        this.addUser();
+    }
+
+    handleKeyPress = (event: KeyboardEvent) => {
+        this.addUser();
+    }
+
+    addUser = () => {
         if (this.state.typed === "") {
             return;
         }

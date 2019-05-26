@@ -33,7 +33,9 @@ export default class BillInput extends Component<OwnProps, OwnState> {
         return (
             <div className="box">
                 <HowMuch key={this.state.id} onHowMuchChange={this.handleHowMuchOut} data={this.state.howMuch} />
-                <WhoCharged key={this.state.id + 1} onWhoChargedChange={this.handleWhoCharged} data={this.state.whoCharged} />
+                <WhoCharged key={this.state.id + 1}
+                    onWhoChargedChange={this.handleWhoCharged} data={this.state.whoCharged}
+                    onEnter={this.handleEnter} />
                 <AddBillButton onClick={this.handleClick} />
             </div>
         );
@@ -46,6 +48,20 @@ export default class BillInput extends Component<OwnProps, OwnState> {
     }
 
     handleClick = (_event: MouseEvent) => {
+        this.addBill();
+    }
+
+    handleEnter = () => {
+        this.addBill();
+    }
+
+    handleWhoCharged = (out: WhoChargedData) => {
+        this.setState({
+            whoCharged: out
+        });
+    }
+
+    addBill = () => {
         this.props.onBillAdd({
             amount: this.state.howMuch.value,
             payer: this.state.whoCharged.value,
@@ -59,12 +75,6 @@ export default class BillInput extends Component<OwnProps, OwnState> {
             whoCharged: {
                 value: ""
             }
-        });
-    }
-
-    handleWhoCharged = (out: WhoChargedData) => {
-        this.setState({
-            whoCharged: out
         });
     }
 }

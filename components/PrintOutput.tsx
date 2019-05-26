@@ -24,6 +24,13 @@ export default class PrintOutput extends Component<OwnProps, any> {
                     각자 낼 금액은 {this.eachPrice()}원 입니다.
                 </p>
                 <ul>
+                    {this.props.bills.map(bill => (
+                        <li key={bill.id}>
+                            {Josa.r(bill.payer, "이/가")} {bill.amount}원을 결제했습니다.
+                        </li>
+                    ))}
+                </ul>
+                <ul>
                     {this.calculateTransactions().map(transaction => (
                         <li key={`${transaction.from}-${transaction.to}-${transaction.amount}`}>
                             {Josa.r(transaction.from, "은/는")} {transaction.to}에게 {transaction.amount}원을 송금해 주세요.

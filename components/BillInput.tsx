@@ -10,6 +10,7 @@ interface OwnProps {
 }
 
 interface OwnState {
+    id: number;
     howMuch: HowMuchData;
     whoCharged: WhoChargedData;
 }
@@ -18,6 +19,7 @@ export default class BillInput extends Component<OwnProps, OwnState> {
     constructor(props: OwnProps) {
         super(props);
         this.state = {
+            id: Math.random(),
             howMuch: {
                 value: 0
             },
@@ -30,8 +32,8 @@ export default class BillInput extends Component<OwnProps, OwnState> {
     render() {
         return (
             <div className="box">
-                <HowMuch onHowMuchChange={this.handleHowMuchOut} data={this.state.howMuch} />
-                <WhoCharged onWhoChargedChange={this.handleWhoCharged} data={this.state.whoCharged} />
+                <HowMuch key={this.state.id} onHowMuchChange={this.handleHowMuchOut} data={this.state.howMuch} />
+                <WhoCharged key={this.state.id + 1} onWhoChargedChange={this.handleWhoCharged} data={this.state.whoCharged} />
                 <AddBillButton onClick={this.handleClick} />
             </div>
         );
@@ -47,9 +49,10 @@ export default class BillInput extends Component<OwnProps, OwnState> {
         this.props.onBillAdd({
             amount: this.state.howMuch.value,
             payer: this.state.whoCharged.value,
-            id: Math.random(),
+            id: this.state.id,
         });
         this.setState({
+            id: Math.random(),
             howMuch: {
                 value: 0
             },

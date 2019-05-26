@@ -23,7 +23,7 @@ export default class AdditionalUsers extends Component<OwnProps, OwnState> {
             <div className="box">
                 <ul>
                     {this.props.users.map(user => (
-                        <li>
+                        <li key={user.name}>
                             {user.name}
                         </li>
                     ))}

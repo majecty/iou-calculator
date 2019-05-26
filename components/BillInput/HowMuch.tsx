@@ -27,7 +27,7 @@ export default class HowMuch extends React.Component<OwnProps, OwnState> {
                 <h2 className="subtitle field-label is-normal">
                     얼마나?
                 </h2>
-                <input type="text" value={this.props.data.value} onChange={this.handleChange} className="input field-body" />
+                <input type="number" value={this.state.typed} onChange={this.handleChange} className="input field-body" />
             </div>
         )
     }

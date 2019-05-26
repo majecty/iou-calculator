@@ -7,6 +7,7 @@ import BillList from '../components/BillList';
 import { Bill, User } from '../types/globalTypes';
 import * as R from "rambda";
 import AdditionalUsers from '../components/AdditionalUsers';
+import PrintOutput from '../components/PrintOutput';
 
 interface OwnState {
   bills: Bill[];
@@ -30,6 +31,7 @@ export default class Index extends React.Component<any, OwnState> {
           <BillInput onBillAdd={this.handleBillAdd} />
           <BillList bills={this.state.bills} />
           <AdditionalUsers users={this.state.users} onUserAdd={this.handleUserAdd} />
+          <PrintOutput users={this.state.users} bills={this.state.bills} />
         </div>
       </div>
     )

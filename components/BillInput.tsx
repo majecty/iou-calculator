@@ -36,7 +36,8 @@ export default class BillInput extends Component<OwnProps, OwnState> {
                 <WhoCharged key={this.state.id + 1}
                     onWhoChargedChange={this.handleWhoCharged} data={this.state.whoCharged}
                     onEnter={this.handleEnter} />
-                <HowMuch key={this.state.id} onHowMuchChange={this.handleHowMuchOut} data={this.state.howMuch} />
+                <HowMuch key={this.state.id} onHowMuchChange={this.handleHowMuchOut} data={this.state.howMuch}
+                    onEnter={this.handleEnter} />
                 <AddBillButton onClick={this.handleClick} />
             </div>
         );

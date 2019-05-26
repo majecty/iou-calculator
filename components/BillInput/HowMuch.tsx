@@ -1,8 +1,9 @@
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, KeyboardEvent } from "react";
 
 interface OwnProps {
     data: HowMuchData;
     onHowMuchChange: (out: HowMuchData) => void;
+    onEnter: () => void;
 }
 
 interface OwnState {
@@ -27,7 +28,9 @@ export default class HowMuch extends React.Component<OwnProps, OwnState> {
                 <h2 className="subtitle field-label is-normal">
                     얼마나?
                 </h2>
-                <input type="number" value={this.state.typed} onChange={this.handleChange} className="input field-body" />
+                <input type="number" value={this.state.typed} onChange={this.handleChange}
+                    onKeyPress={this.handleKeyPress}
+                    className="input field-body" />
             </div>
         )
     }
@@ -45,6 +48,12 @@ export default class HowMuch extends React.Component<OwnProps, OwnState> {
             });
         } catch (_err) {
             // do nothing
+        }
+    }
+
+    handleKeyPress = (event: KeyboardEvent) => {
+        if (event.key.toLowerCase() === "enter") {
+            this.props.onEnter();
         }
     }
 }

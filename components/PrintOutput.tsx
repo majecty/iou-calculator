@@ -21,7 +21,7 @@ export default class PrintOutput extends Component<OwnProps, any> {
                 <p>
                     총 금액은 {this.totalPrice()}원 입니다.
                     총 인원은 {this.userCount()}명 입니다.
-                    각자 낼 금액은 {this.eachPrice()}원 입니다.
+                    각자 낼 금액은 {+this.eachPrice().toFixed()}원 입니다.
                 </p>
                 <ul>
                     {this.props.bills.map(bill => (
@@ -95,7 +95,7 @@ function resolveDeptOnce(state: TransactionState): TransactionState {
     const newTransaction = {
         from: lastDept.name,
         to: firstDept.name,
-        amount: transferredAmount
+        amount: Math.floor(transferredAmount)
     };
 
     let newDepts = [
@@ -109,7 +109,7 @@ function resolveDeptOnce(state: TransactionState): TransactionState {
             amount: lastDept.amount - transferredAmount
         }
     ];
-    newDepts = R.filter(dept => dept.amount !== 0, newDepts);
+    newDepts = R.filter(dept => Math.abs(dept.amount) >= 1, newDepts);
     newDepts = R.sortBy(dept => dept.amount, newDepts);
 
     assert(newDepts.length < state.depts.length, `resolveDeptOnce should reduce depts \n From: ${JSON.stringify(state.depts)}\n To: ${JSON.stringify(newDepts)}`);

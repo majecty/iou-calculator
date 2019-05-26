@@ -11,7 +11,7 @@ export default class BillList extends Component<OwnProps, any> {
         return (
             <div className="box">
                 <h2 className="subtitle">
-                    계산서
+                    영수증
                 </h2>
                 <ul>
                     {this.props.bills.map(bill => (

@@ -15,7 +15,7 @@ export default class WhoCharged extends React.Component<OwnProps, any> {
         return (
             <div className="field is-horizontal">
                 <h2 className="subtitle field-label is-normal">
-                    누가 냈나요?
+                    누가
                 </h2>
                 <input type="text"
                     value={this.props.data.value} onChange={this.handleChange}

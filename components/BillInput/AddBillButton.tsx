@@ -8,7 +8,7 @@ export default class AddBillButton extends React.Component<OwnProps, any> {
     render() {
         return (
             <div className="control">
-                <button className="button is-primary" onClick={this.handleClick}> 추가 </button>
+                <button className="button is-primary" onClick={this.handleClick}> 계산했어요 </button>
             </div>
         )
     }

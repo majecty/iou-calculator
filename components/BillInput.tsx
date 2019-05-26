@@ -32,10 +32,11 @@ export default class BillInput extends Component<OwnProps, OwnState> {
     render() {
         return (
             <div className="box">
-                <HowMuch key={this.state.id} onHowMuchChange={this.handleHowMuchOut} data={this.state.howMuch} />
+                <h2 className="subtitle"> 영수증 입력 </h2>
                 <WhoCharged key={this.state.id + 1}
                     onWhoChargedChange={this.handleWhoCharged} data={this.state.whoCharged}
                     onEnter={this.handleEnter} />
+                <HowMuch key={this.state.id} onHowMuchChange={this.handleHowMuchOut} data={this.state.howMuch} />
                 <AddBillButton onClick={this.handleClick} />
             </div>
         );

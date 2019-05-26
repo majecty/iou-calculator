@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Bill } from '../types/globalTypes';
+const Josa = require("josa-js");
 
 interface OwnProps {
     bills: Bill[];
@@ -15,7 +16,7 @@ export default class BillList extends Component<OwnProps, any> {
                 <ul>
                     {this.props.bills.map(bill => (
                         <li key={bill.id.toString()}>
-                            {bill.payer}가 {bill.amount} 만큼 결제
+                            {Josa.r(bill.payer, "이/가")} {bill.amount}원을 결제
                         </li>
                     ))}
                 </ul>

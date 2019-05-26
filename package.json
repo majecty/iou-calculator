@@ -9,6 +9,7 @@
     "@zeit/next-sass": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "bulma": "^0.7.5",
+    "josa-js": "^0.0.2",
     "next": "^8.1.0",
     "node-sass": "^4.12.0",
     "rambda": "^2.10.0",

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { User, Bill } from '../types/globalTypes';
 import * as R from "rambda";
+const Josa = require("josa-js");
 
 interface OwnProps {
     users: User[];
@@ -25,7 +26,7 @@ export default class PrintOutput extends Component<OwnProps, any> {
                 <ul>
                     {this.calculateTransactions().map(transaction => (
                         <li key={`${transaction.from}-${transaction.to}-${transaction.amount}`}>
-                            {transaction.from}은 {transaction.to}에게 {transaction.amount}원을 송금해 주세요.
+                            {Josa.r(transaction.from, "은/는")} {transaction.to}에게 {transaction.amount}원을 송금해 주세요.
                         </li>
                     ))}
                 </ul>

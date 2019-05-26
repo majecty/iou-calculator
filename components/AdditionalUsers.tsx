@@ -1,5 +1,6 @@
 import React, { Component, SyntheticEvent, MouseEvent, KeyboardEvent } from 'react'
 import { User } from '../types/globalTypes';
+import "./AdditionalUsers.sass";
 
 interface OwnProps {
     users: User[]
@@ -21,6 +22,12 @@ export default class AdditionalUsers extends Component<OwnProps, OwnState> {
     render() {
         return (
             <div className="box">
+                <div className="field">
+                    <label className="subtitle is-normal">
+                        사람 추가하기
+                        </label>
+                </div>
+
                 <ul>
                     {this.props.users.map(user => (
                         <li key={user.name}>
@@ -28,14 +35,17 @@ export default class AdditionalUsers extends Component<OwnProps, OwnState> {
                         </li>
                     ))}
                 </ul>
+                <div className="field">
+                    <div className="control">
+                        <input type="text" value={this.state.typed} onChange={this.handleChange} className="input"
+                            onKeyPress={this.handleKeyPress} />
+                    </div>
+                </div>
 
-                <div className="field is-horizontal">
-                    <label className="subtitle field-label is-normal">
-                        사람 추가하기
-                    </label>
-                    <input type="text" value={this.state.typed} onChange={this.handleChange} className="input field-body"
-                        onKeyPress={this.handleKeyPress} />
-                    <button className="button is-primary" onClick={this.handleClick}>추가</button>
+                <div className="field">
+                    <div className="control">
+                        <button className="button is-primary user-add-button" onClick={this.handleClick}>추가</button>
+                    </div>
                 </div>
             </div>
         )
@@ -53,7 +63,9 @@ export default class AdditionalUsers extends Component<OwnProps, OwnState> {
     }
 
     handleKeyPress = (event: KeyboardEvent) => {
-        this.addUser();
+        if (event.key.toLowerCase() === "enter") {
+            this.addUser();
+        }
     }
 
     addUser = () => {

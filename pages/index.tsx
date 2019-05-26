@@ -27,7 +27,7 @@ export default class Index extends React.Component<any, OwnState> {
     return (
       <div className="section">
         <div className="container">
-          <h1 className="title">Hello Next.js</h1>
+          <h1 className="title">더치페이 계산기</h1>
           <BillInput onBillAdd={this.handleBillAdd} />
           <BillList bills={this.state.bills} />
           <AdditionalUsers users={this.state.users} onUserAdd={this.handleUserAdd} />

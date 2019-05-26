@@ -50,7 +50,7 @@ export default class PrintOutput extends Component<OwnProps, any> {
     }
 
     eachPrice = () => {
-        return this.totalPrice() / this.userCount();
+        return this.totalPrice() / Math.max(this.userCount(), 1);
     }
 
     calculateTransactions = (): Transaction[] => {

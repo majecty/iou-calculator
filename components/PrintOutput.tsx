@@ -21,7 +21,7 @@ export default class PrintOutput extends Component<OwnProps, any> {
                 <p>
                     총 금액은 {this.totalPrice()}원 입니다.
                     총 인원은 {this.userCount()}명 입니다.
-                    각자 낼 금액은 {+this.eachPrice().toFixed()}원 입니다.
+                    각자 낼 금액은 {+this.eachPrice().toFixed(1)}원 입니다.
                 </p>
                 <ul>
                     {this.props.bills.map(bill => (
@@ -122,7 +122,8 @@ function resolveDeptOnce(state: TransactionState): TransactionState {
 function resolveDept(users: User[], bills: Bill[]): Transaction[] {
     const totalAmount = R.reduce((acc, bill) => acc + bill.amount, 0, bills);
     const userCount = users.length;
-    const average = totalAmount / userCount;
+    const average = Math.floor(totalAmount / userCount);
+    const error = totalAmount - average * userCount;
     const defaultDepts = R.map(user => ({
         name: user.name,
         amount: average
@@ -132,6 +133,9 @@ function resolveDept(users: User[], bills: Bill[]): Transaction[] {
         deptMap[bill.payer].amount -= bill.amount;
     }, bills);
     const initialDepts = R.sortBy(dept => dept.amount, R.values(deptMap));
+    R.takeLast(error, initialDepts).forEach(dept => {
+        dept.amount += 1;
+    });
 
     const firstState: TransactionState = {
         depts: initialDepts,

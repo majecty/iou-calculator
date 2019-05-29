@@ -8,6 +8,8 @@ import { Bill, User } from '../types/globalTypes';
 import * as R from "rambda";
 import AdditionalUsers from '../components/AdditionalUsers';
 import PrintOutput from '../components/PrintOutput';
+import BillCardInput from '../components/BillCardInput';
+import PrintOutputExample from '../components/PrintOutputExample';
 
 interface OwnState {
   bills: Bill[];
@@ -28,10 +30,13 @@ export default class Index extends React.Component<any, OwnState> {
       <div className="section">
         <div className="container">
           <h1 className="title">더치페이 계산기</h1>
-          <BillInput onBillAdd={this.handleBillAdd} />
+          <BillCardInput onBillAdd={this.handleBillAdd} bills={this.state.bills} />
+          <PrintOutputExample />
+          {/* <PrintOutput users={this.state.users} bills={this.state.bills} /> */}
+          {/* <BillInput onBillAdd={this.handleBillAdd} />
           <BillList bills={this.state.bills} />
           <AdditionalUsers users={this.state.users} onUserAdd={this.handleUserAdd} />
-          <PrintOutput users={this.state.users} bills={this.state.bills} />
+          <PrintOutput users={this.state.users} bills={this.state.bills} /> */}
         </div>
       </div>
     )

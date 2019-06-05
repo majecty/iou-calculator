@@ -1,21 +1,18 @@
-import React, { Component, MouseEvent } from 'react';
+import React, { Component } from 'react';
 
-import AddBillButton from './BillInput/AddBillButton';
-import HowMuch, { HowMuchData } from './BillInput/HowMuch';
-import WhoCharged, { WhoChargedData } from './BillInput/WhoCharged';
 import { Bill } from '../types/globalTypes';
+import BillCardExample from './BillCard/BillCardExample';
+import BillCardAdd from './BillCard/BillCardAdd';
+import * as R from "rambda";
 
 interface OwnProps {
     onBillAdd: (bill: Bill) => void;
+    bills: Bill[];
+    exampleBills: Bill[];
+    showExample: boolean;
 }
 
-interface OwnState {
-    id: number;
-    howMuch: HowMuchData;
-    whoCharged: WhoChargedData;
-}
-
-export default class BillCardInput extends Component<OwnProps, OwnState> {
+export default class BillCardInput extends Component<OwnProps> {
     constructor(props: OwnProps) {
         super(props);
         this.state = {
@@ -30,164 +27,27 @@ export default class BillCardInput extends Component<OwnProps, OwnState> {
     }
 
     render() {
+        const exampleCards: [string, JSX.Element][] = R.map(bill =>
+            [String(bill.id), <BillCardExample bill={bill} />], this.props.exampleBills);
+
+        const cards: [string, JSX.Element][] = R.concat([
+            ["add-bill", <BillCardAdd />],
+        ], this.props.showExample ? exampleCards : []);
+
         return (
             <div className="mb3">
                 <h2 className="subtitle"> 영수증 입력 </h2>
-                <div className="columns" >
-                    <div className="column is-one-third">
-                        <div className="card">
-                            <header className="card-header">
-                                <p className="card-header-title">
-                                    새 영수증
-                                </p>
-                            </header>
-                            <div className="card-content">
-                                <div className="content">
-                                    <input type="text"
-                                        placeholder="회우"
-                                        className="input"
-                                    />
-                                    가
-                                    <input type="number"
-                                        placeholder="3000"
-                                        className="input"
-                                    />
-                                    원을
-                                </div>
-                            </div>
-                            <footer className="card-footer">
-                                <a href="#" className="card-footer-item">결제한 영수증 추가</a>
-                            </footer>
+                {
+                    R.map(((cards3: [string, JSX.Element][], index: number) => (
+                        <div className="columns" key={`row-${index}`}>
+                            {
+                                R.map(([key, card]) => <div className="column is-one-third" key={key}>{card}</div>, cards3)
+                            }
                         </div>
-                    </div>
-
-                    <div className="column is-one-third">
-                        <div className="card has-background-white-bis">
-                            <header className="card-header">
-                                <p className="card-header-title">
-                                    영수증 예시
-                                </p>
-                            </header>
-                            <div className="card-content">
-                                <div className="content">
-                                    <input type="text"
-                                        value="하나"
-                                        className="input"
-                                        disabled
-                                    />
-                                    가
-                                    <input type="number"
-                                        value="0"
-                                        className="input"
-                                    />
-                                    원을
-                                    결제함
-                                </div>
-                            </div>
-                            <footer className="card-footer">
-                                <a href="#" className="card-footer-item">변경사항 저장</a>
-                                <a href="#" className="card-footer-item">영수증 삭제</a>
-                            </footer>
-                        </div>
-                    </div>
-                    <div className="column is-one-third">
-                        <div className="card has-background-white-ter">
-                            <header className="card-header">
-                                <p className="card-header-title">
-                                    영수증 예시
-                                </p>
-                            </header>
-                            <div className="card-content">
-                                <div className="content">
-                                    <input type="text"
-                                        value="회우"
-                                        className="input"
-                                    />
-                                    가
-                                    <input type="number"
-                                        value="3000"
-                                        className="input"
-                                    />
-                                    원을
-                                    결제함
-                                </div>
-                            </div>
-                            <footer className="card-footer">
-                                <a href="#" className="card-footer-item">변경사항 저장</a>
-                                <a href="#" className="card-footer-item">영수증 삭제</a>
-                            </footer>
-                        </div>
-                    </div>
-                </div>
-                <div className="columns">
-                    <div className="column is-one-third">
-                        <div className="card has-background-white-ter">
-                            <header className="card-header">
-                                <p className="card-header-title">
-                                    영수증 예시
-                                </p>
-                            </header>
-                            <div className="card-content">
-                                <div className="content">
-                                    <input type="text"
-                                        value="회우"
-                                        className="input"
-                                    />
-                                    가
-                                    <input type="number"
-                                        value="4000"
-                                        className="input"
-                                    />
-                                    원을
-                                    결제함
-                                </div>
-                            </div>
-                            <footer className="card-footer">
-                                <a href="#" className="card-footer-item">변경사항 저장</a>
-                                <a href="#" className="card-footer-item">영수증 삭제</a>
-                            </footer>
-                        </div>
-                    </div>
-                </div>
-
+                    )) as any,
+                        R.splitEvery(3, cards))
+                }
             </div>
         );
-    }
-
-    handleHowMuchOut = (out: HowMuchData) => {
-        this.setState({
-            howMuch: out
-        });
-    }
-
-    handleClick = (_event: MouseEvent) => {
-        this.addBill();
-    }
-
-    handleEnter = () => {
-        this.addBill();
-    }
-
-    handleWhoCharged = (out: WhoChargedData) => {
-        this.setState({
-            whoCharged: out
-        });
-    }
-
-    addBill = () => {
-        this.props.onBillAdd({
-            amount: this.state.howMuch.value,
-            payer: this.state.whoCharged.value,
-            id: this.state.id,
-        });
-        this.setState({
-            id: Math.random(),
-            howMuch: {
-                value: 0
-            },
-            whoCharged: {
-                value: ""
-            }
-        });
     }
 }

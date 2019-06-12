@@ -4,9 +4,12 @@ import { Bill } from '../types/globalTypes';
 import BillCardExample from './BillCard/BillCardExample';
 import BillCardAdd from './BillCard/BillCardAdd';
 import * as R from "rambda";
+import BillCardEdit from './BillCard/BillCardEdit';
 
 interface OwnProps {
     onBillAdd: (bill: Bill) => void;
+    onBillEdit: (bill: Bill) => void;
+    onBillRemove: (id: number) => void;
     bills: Bill[];
     exampleBills: Bill[];
     showExample: boolean;
@@ -30,9 +33,11 @@ export default class BillCardInput extends Component<OwnProps> {
         const exampleCards: [string, JSX.Element][] = R.map(bill =>
             [String(bill.id), <BillCardExample bill={bill} />], this.props.exampleBills);
 
+        const billCards: [string, JSX.Element][] = R.map(bill => [String(bill.id), <BillCardEdit bill={bill} onBillEdit={this.props.onBillEdit} onBillRemove={this.props.onBillRemove} />], this.props.bills);
+
         const cards: [string, JSX.Element][] = R.concat([
-            ["add-bill", <BillCardAdd />],
-        ], this.props.showExample ? exampleCards : []);
+            ["add-bill", <BillCardAdd onBillAdd={this.props.onBillAdd} />],
+        ], this.props.showExample ? exampleCards : billCards);
 
         return (
             <div className="mb3">

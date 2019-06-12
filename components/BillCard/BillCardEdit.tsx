@@ -3,7 +3,9 @@ import { Bill } from '../../types/globalTypes';
 const Josa = require("josa-js");
 
 interface OwnProps {
-    onBillAdd: (bill: Bill) => void;
+    bill: Bill;
+    onBillRemove: (id: number) => void;
+    onBillEdit: (bill: Bill) => void;
 }
 
 interface OwnState {
@@ -11,31 +13,30 @@ interface OwnState {
     typedAmount: string;
 }
 
-export default class BillCardAdd extends Component<OwnProps, OwnState> {
+export default class BillCardEdit extends Component<OwnProps, OwnState> {
     private constructor(props: OwnProps) {
         super(props);
 
         this.state = {
-            typedPayer: "",
-            typedAmount: ""
+            typedPayer: props.bill.payer,
+            typedAmount: props.bill.amount.toString()
         };
     }
 
     public render() {
         return (
-            <div className="card">
+            <div className="card has-background-white-bis">
                 <header className="card-header">
                     <p className="card-header-title">
-                        새 영수증
+                        영수증 예시
                     </p>
                 </header>
                 <div className="card-content">
                     <div className="content">
                         <div className="columns is-mobile">
                             <input type="text"
-                                placeholder="희우"
-                                className="input column"
                                 value={this.state.typedPayer}
+                                className="input column"
                                 onChange={this.handlePayerInputChange}
                             />
                             <span className="column is-narrow">
@@ -44,22 +45,23 @@ export default class BillCardAdd extends Component<OwnProps, OwnState> {
                         </div>
                         <div className="columns is-mobile">
                             <input type="number"
-                                placeholder="3000"
-                                className="input column"
                                 value={this.state.typedAmount}
+                                className="input column"
                                 onChange={this.handleAmountInputChange}
                             />
                             <span className="column is-narrow">
                                 원을
+                                결제함
                             </span>
                         </div>
                     </div>
                 </div>
                 <footer className="card-footer">
-                    <a href="#" className="card-footer-item" onClick={this.handleAddBill}>결제한 영수증 추가</a>
+                    <a href="#" className="card-footer-item" onClick={this.handleSaveClick}>변경사항 저장</a>
+                    <a href="#" className="card-footer-item" onClick={this.handleRemoveClick}>영수증 삭제</a>
                 </footer>
             </div>
-        );
+        )
     }
 
     handlePayerInputChange = (event: SyntheticEvent<HTMLInputElement>) => {
@@ -74,20 +76,21 @@ export default class BillCardAdd extends Component<OwnProps, OwnState> {
         });
     }
 
-    handleAddBill = (_event: any) => {
+    handleSaveClick = (_event: any) => {
         try {
-            const amount = parseInt(this.state.typedAmount);
-            this.props.onBillAdd({
-                amount,
+            const amount = parseInt(this.state.typedAmount, 10);
+
+            this.props.onBillEdit({
                 payer: this.state.typedPayer,
-                id: Math.random()
-            });
-            this.setState({
-                typedAmount: "",
-                typedPayer: ""
+                amount,
+                id: this.props.bill.id
             });
         } catch (_err) {
-            alert("입력한 금액이 숫자 형식이 아닙니다.");
+            alert("금액을 잘못 입력하셨습니다.");
         }
+    }
+
+    handleRemoveClick = () => {
+        this.props.onBillRemove(this.props.bill.id);
     }
 }

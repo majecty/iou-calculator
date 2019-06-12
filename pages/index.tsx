@@ -50,6 +50,7 @@ export default class Index extends React.Component<any, OwnState> {
           <h1 className="title">더치페이 계산기</h1>
           <BillCardInput onBillAdd={this.handleBillAdd} bills={this.state.bills} exampleBills={exampleBills} showExample={this.needExample()} />
           {this.needExample() && <PrintOutput bills={exampleBills} users={exampleUsers} />}
+          {this.needExample() || <PrintOutput bills={this.state.bills} users={this.state.users} />}
         </div>
       </div>
     )
@@ -71,6 +72,16 @@ export default class Index extends React.Component<any, OwnState> {
         bills: state.bills.concat(bill)
       }
     });
+  }
+
+  handleBillEdit = (bill: Bill) => {
+    this.setState(prevState => {
+      const billInState = R.find(stateBill => stateBill.id === bill.id, prevState.bills);
+      return {
+
+      }
+    })
+
   }
 
   handleUserAdd = (user: User) => {

@@ -16,20 +16,28 @@ export default class BillCardExample extends Component<OwnProps> {
                 </header>
                 <div className="card-content">
                     <div className="content">
-                        <input type="text"
-                            value={this.props.bill.payer}
-                            className="input"
-                            disabled
-                        />
-                        가
-                        <input type="number"
-                            value={this.props.bill.amount}
-                            className="input"
-                            disabled
-                        />
-                        원을
-                        결제함
-                                </div>
+                        <div className="columns is-mobile">
+                            <input type="text"
+                                value={this.props.bill.payer}
+                                className="input column"
+                                disabled
+                            />
+                            <span className="column is-narrow">
+                                가
+                            </span>
+                        </div>
+                        <div className="columns is-mobile">
+                            <input type="number"
+                                value={this.props.bill.amount}
+                                className="input column"
+                                disabled
+                            />
+                            <span className="column is-narrow">
+                                원을
+                                결제함
+                            </span>
+                        </div>
+                    </div>
                 </div>
                 <footer className="card-footer">
                     <a href="#" className="card-footer-item">변경사항 저장</a>

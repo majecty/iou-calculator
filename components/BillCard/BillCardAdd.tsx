@@ -11,16 +11,24 @@ export default class BillCardAdd extends Component {
                 </header>
                 <div className="card-content">
                     <div className="content">
-                        <input type="text"
-                            placeholder="희우"
-                            className="input"
-                        />
-                        가
-                        <input type="number"
-                            placeholder="3000"
-                            className="input"
-                        />
-                        원을
+                        <div className="columns is-mobile">
+                            <input type="text"
+                                placeholder="희우"
+                                className="input column"
+                            />
+                            <span className="column is-narrow">
+                                가
+                            </span>
+                        </div>
+                        <div className="columns is-mobile">
+                            <input type="number"
+                                placeholder="3000"
+                                className="input column"
+                            />
+                            <span className="column is-narrow">
+                                원을
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <footer className="card-footer">

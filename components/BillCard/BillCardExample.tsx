@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Bill } from '../../types/globalTypes';
+const Josa = require("josa-js");
 
 interface OwnProps {
     bill: Bill;
@@ -23,7 +24,7 @@ export default class BillCardExample extends Component<OwnProps> {
                                 disabled
                             />
                             <span className="column is-narrow">
-                                가
+                                {Josa.c(this.props.bill.payer, "이/가")}
                             </span>
                         </div>
                         <div className="columns is-mobile">

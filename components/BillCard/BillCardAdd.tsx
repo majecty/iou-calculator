@@ -1,6 +1,21 @@
-import React, { Component } from 'react'
+import React, { Component, SyntheticEvent } from 'react'
+const Josa = require("josa-js");
 
-export default class BillCardAdd extends Component {
+interface OwnState {
+    typedPayer: string;
+    typedAmount: string;
+}
+
+export default class BillCardAdd extends Component<any, OwnState> {
+    private constructor(props: any) {
+        super(props);
+
+        this.state = {
+            typedPayer: "",
+            typedAmount: ""
+        };
+    }
+
     public render() {
         return (
             <div className="card">
@@ -15,9 +30,10 @@ export default class BillCardAdd extends Component {
                             <input type="text"
                                 placeholder="희우"
                                 className="input column"
+                                onChange={this.handlePayerInputChange}
                             />
                             <span className="column is-narrow">
-                                가
+                                {Josa.c(this.state.typedPayer, "이/가")}
                             </span>
                         </div>
                         <div className="columns is-mobile">
@@ -36,5 +52,11 @@ export default class BillCardAdd extends Component {
                 </footer>
             </div>
         );
+    }
+
+    handlePayerInputChange = (event: SyntheticEvent<HTMLInputElement>) => {
+        this.setState({
+            typedPayer: (event.target as HTMLInputElement).value
+        });
     }
 }
